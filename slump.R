@@ -1,28 +1,29 @@
 model<- read.csv(file.choose(),header=T)
 attach(model)
-plot(model)
-lm.model <- lm(Y~X1+X2+X3+X4+X5+X6+X7)
-summary(lm.model)
+plot(model) #import the concrete slump data from UCI repository
+lm.model <- lm(Y~X1+X2+X3+X4+X5+X6+X7) # Fittilng the model to regression model
+summary(lm.model) # determining the R-square score
 lm.model <- lm(ynew ~ X1+X2+X3+X4+X5+X6+X7)
 summary(lm.model)
 FD= X6-X3
 par(mfrow=c(2,2))
 plot(lm.model)
 
-qqPlot(lm.model, main="QQ Plot")
-yhat<-lm.model$fitted.values
-t<-rstudent(lm.model)
-plot(yhat,t)
-qqnorm(lm.model$res)
-summary(lm(Y~log(1+X)))
-ynew<-(log(Y))
-ynew<- 1/(Y)
-ynew<-sqrt(Y)
-FD <- X6-X3
+qqPlot(lm.model, main="QQ Plot") # plot normal plot 
+yhat<-lm.model$fitted.values # plot of predicted values
+t<-rstudent(lm.model) # plot of student residuals
+plot(yhat,t) # plot of predicted y versus residuals
+
+qqnorm(lm.model$res) 
+summary(lm(Y~log(1+X))) # transformations to y
+ynew<-(log(Y)) # transformations to y
+ynew<- 1/(Y) # transformations to y
+ynew<-sqrt(Y) # transformations to y
+FD <- X6-X3 
 par(mfrow=c(2,2))
 plot(lm.model)
 
-print(vif(lm.model))
+print(vif(lm.model)) #to detect multicollinearity
 
 influence.measures(lm.model)
 
